@@ -187,7 +187,7 @@ const EmployerDashboard = () => {
                                         <div className="flex gap-2">
                                             {app.resumeUrl ? (
                                                 <a 
-                                                    href={`http://localhost:5000${app.resumeUrl}`} 
+                                                    href={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${app.resumeUrl}`} 
                                                     target="_blank" 
                                                     rel="noopener noreferrer"
                                                     className="btn btn-secondary btn-sm flex items-center gap-2"

@@ -22,7 +22,8 @@ const Login = () => {
                 navigate('/');
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to login');
+            const message = err.response?.data?.message || err.message || 'Failed to login';
+            setError(message);
         }
     };
 

@@ -48,7 +48,8 @@ const Signup = () => {
             await signup(signupData);
             navigate('/login');
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to sign up');
+            const message = err.response?.data?.message || err.message || 'Failed to sign up';
+            setError(message);
         }
     };
 

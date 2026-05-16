@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Briefcase, Code, FileText, Upload, CheckCircle, AlertCircle, Loader2, Info } from 'lucide-react';
 import './Lists.css'; // Reusing some base styles
@@ -26,7 +26,7 @@ const CandidateProfile = () => {
 
     const fetchProfile = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+            const res = await api.get(`/users/${user.id}`);
             setProfile(res.data);
             setLoading(false);
         } catch (err) {
@@ -40,7 +40,7 @@ const CandidateProfile = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            const res = await axios.put(`http://localhost:5000/api/users/${user.id}`, {
+            const res = await api.put(`/users/${user.id}`, {
                 name: profile.name,
                 bio: profile.bio,
                 skills: profile.skills
@@ -66,7 +66,7 @@ const CandidateProfile = () => {
 
         setUploading(true);
         try {
-            const res = await axios.post(`http://localhost:5000/api/users/${user.id}/resume`, formData, {
+            const res = await api.post(`/users/${user.id}/resume`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setProfile({ ...profile, resumeUrl: res.data.resumeUrl });
@@ -262,7 +262,7 @@ const CandidateProfile = () => {
                                         </div>
                                         <div style={{ display: 'flex', gap: '1rem' }}>
                                             <a 
-                                                href={`http://localhost:5000${profile.resumeUrl}`} 
+                                                href={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000'}${profile.resumeUrl}`} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
                                                 className="btn btn-secondary btn-sm"
